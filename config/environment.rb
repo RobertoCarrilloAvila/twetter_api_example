@@ -48,3 +48,5 @@ CLIENT = Twitter::REST::Client.new do |config|
   config.access_token        = ENV["ACCESS_TOKEN"]
   config.access_token_secret = ENV["ACCESS_SECRET"]
 end
+
+#fender = CLIENT.user_timeline("Fender")
