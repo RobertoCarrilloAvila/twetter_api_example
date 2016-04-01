@@ -12,7 +12,7 @@ end
 
 # Heroku controla a que base de datos nos conectamos configurando la variable de environment DATABASE_URL
 # Para que pueda correr nuestro app en heroku debemos respetar esto. 
-db = URI.parse(ENV['DATABASE_URL'] || "postgres://localhost/#{APP_NAME}_#{Sinatra::Application.environment}")
+db = URI.parse(ENV['DATABASE_URL'] || "postgres://postgres:dummy@localhost/#{APP_NAME}_#{Sinatra::Application.environment}")
 
 DB_NAME = db.path[1..-1]
 

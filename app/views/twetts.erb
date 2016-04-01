@@ -1,0 +1,9 @@
+<a href="/" style="float: right">Inicio</a>
+<h1><%= @name %></h1>
+
+<ul>
+	<% @twetts.each do |t| %>
+		<li><%= t.description %></li>
+		<br>
+	<% end %>
+</ul>

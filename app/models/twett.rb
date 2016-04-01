@@ -1,0 +1,3 @@
+class Twett < ActiveRecord::Base
+  # Remember to create a migration!
+end
