@@ -1,8 +1,16 @@
 
-<h1>Bienvenido Twitter!</h1>
+<div class="other">
+	<h1>Bienvenido Twitter!</h1>
 
-<form action="/add" method="post">
-	@<input type="text" name="name">
-	<input type="submit" value="Enviar">
-</form>
-  
+
+	<form id="formulario" action="/add" method="post">
+		@<input type="text" name="name">
+		<input type="submit" value="Enviar">
+	</form>
+</div>
+
+<a href="/tweet" style="float: right">Tweetear</a>
+
+<div class="loading">
+	<img src="/loading.gif" height="100" width="100">
+</div>
