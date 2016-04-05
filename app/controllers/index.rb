@@ -1,6 +1,9 @@
+
 get '/' do
   erb :index
 end
+
+
 
 post '/add' do
 	user = params[:name]
