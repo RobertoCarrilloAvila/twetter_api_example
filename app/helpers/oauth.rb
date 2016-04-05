@@ -18,7 +18,7 @@ def oauth_consumer
 end
 
 def host_and_port
-    # En este método creamos la base de nuestra 'calback url' de la app 
+    # En este método creamos la base de nuestra 'callback url' de la app 
     # para funcionar tanto local como en producción 
     # Esta línea toma de una variable de la petición (creada por sinatra) la url.  
     host_and_port = request.host

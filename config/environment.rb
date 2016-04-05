@@ -22,6 +22,7 @@ require 'erb'
 require 'yaml'
 require 'twitter'
 require 'oauth'
+require 'pp'
 
 APP_ROOT = Pathname.new(File.expand_path('../../', __FILE__))
 
