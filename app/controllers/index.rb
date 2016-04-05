@@ -1,8 +1,16 @@
 
 enable :sessions
 
+before '/' do
+	redirect to '/welcome' if session[:user]==nil
+end
+
+get '/welcome' do
+	erb :welcome
+end
+
 get '/' do
-  erb :index
+	erb :index
 end
 
 
@@ -11,7 +19,9 @@ post '/add' do
 	user = params[:name]
 	u = User.create(name: user)
 	if u.valid?
-		CLIENT.user_timeline(u.name).each { |t| u.twetts << Twett.create(description: t.text) }
+		puts "/"*40
+		p session[:user]
+		p session[:user].connection.user_timeline(u.name).each { |t| u.twetts << Twett.create(description: t.text) }
 		#puts "*"*30
 		#puts "valido"
 	end
@@ -22,17 +32,17 @@ end
 
 
 get '/tweet' do
-    erb :new_tweet
+	erb :new_tweet
 end
 
 
 post '/tweet' do
 	text = params[:texto]
     #begin
-    	puts "*"*40
-    	puts text
-    	CLIENT.update(text)
-    	erb "Twett publicado exitosamente", layout: false
+    puts "*"*40
+    puts text
+    CLIENT.update(text)
+    erb "Twett publicado exitosamente", layout: false
     #rescue
     #	erb "Error al publicar el Twett", layout: false
     #end
@@ -53,24 +63,50 @@ get '/auth' do
   @access_token = request_token.get_access_token(:oauth_verifier => params[:oauth_verifier])
   # Despues de utilizar el 'request token' ya podemos borrarlo, porque no vuelve a servir. 
   session.delete(:request_token)
-  puts "*"*40
-  pp @access_token
+  # puts "*"*40
+  # pp @access_token
   # puts params[:oauth_token]
   # puts params[:oauth_token_secret]
 
   # Aquí es donde deberás crear la cuenta del usuario y guardar usando el 'acces_token' lo siguiente:
   # nombre, oauth_token y oauth_token_secret
+  nombre = @access_token.params[:screen_name]
+  token = @access_token.token
+  token_secret = @access_token.secret
+
+  #find_or_create_by
+   u = User.find_or_create_by(name: nombre)
+   puts "*"*40
+   p u
+   u.update(token: token, token_secret: token_secret)
+
+  #puts "/"*40
+  # p @access_token.params[:screen_name]
+  # p @access_token.token
+  # p @access_token.secret
+  
+  session[:user] = u
+
+  redirect to '/'
+
+  # CLIENT = Twitter::REST::Client.new do |config|
+  # 	config.consumer_key        = ENV['CONSUMER_KEY']
+  # 	config.consumer_secret     = ENV['CONSUMER_SECRET']
+  # 	config.access_token        = ENV["ACCESS_TOKEN"]
+  # 	config.access_token_secret = ENV["ACCESS_SECRET"]
+  # end
+
   # No olvides crear su sesión 
 end
 
 get '/sign_out' do
   	# Para el signout no olvides borrar el hash de session
-	session.clear
-	redirect to '/'
-end
+  	session.clear
+  	redirect to '/'
+  end
 
-get '/:user' do
-	@name = params[:user]
-	@twetts = User.find_by(name: @name).twetts
-	erb :twetts	
-end
+  get '/:user' do
+  	@name = params[:user]
+  	@twetts = User.find_by(name: @name).twetts
+  	erb :twetts	
+  end
