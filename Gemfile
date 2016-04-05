@@ -23,3 +23,4 @@ group :test do
 end
 
 gem 'twitter'
+gem 'oauth'

@@ -21,6 +21,7 @@ require "sinatra/reloader" if development?
 require 'erb'
 require 'yaml'
 require 'twitter'
+require 'oauth'
 
 APP_ROOT = Pathname.new(File.expand_path('../../', __FILE__))
 
@@ -38,7 +39,7 @@ require APP_ROOT.join('config', 'database')
 env_config = YAML.load_file(APP_ROOT.join('config', 'keys.yaml'))
 
 env_config.each do |key, value|
-	ENV[key]=value
+  ENV[key] = value
 end
 
 
