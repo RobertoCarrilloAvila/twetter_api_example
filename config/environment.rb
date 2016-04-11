@@ -23,6 +23,8 @@ require 'yaml'
 require 'twitter'
 require 'oauth'
 require 'pp'
+require 'sidekiq'
+require 'redis'
 
 APP_ROOT = Pathname.new(File.expand_path('../../', __FILE__))
 
