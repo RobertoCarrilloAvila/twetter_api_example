@@ -41,12 +41,19 @@ post '/tweet' do
     #begin
     puts "*"*40
     puts text
-    t = session[:user].connection.update(text)
-    session[:user].twetts << Twett.create(description: t.text)
-    erb "Twett publicado exitosamente", layout: false
+    #t = session[:user].connection.update(text)
+    #session[:user].twetts << Twett.create(description: t.text)
+    id = session[:user].tweet_later(text)
+    #redirect to "/status/#{id}"
+    erb "#{id}", layout: false
     #rescue
     #	erb "Error al publicar el Twett", layout: false
     #end
+end
+
+get '/status/:job_id' do
+  # regresa el status de un job a una petición AJAX
+  erb "#{job_is_complete(params[:job_id])}", layout: false
 end
 
 

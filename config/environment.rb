@@ -25,6 +25,7 @@ require 'oauth'
 require 'pp'
 require 'sidekiq'
 require 'redis'
+require 'sidekiq/api'
 
 APP_ROOT = Pathname.new(File.expand_path('../../', __FILE__))
 
