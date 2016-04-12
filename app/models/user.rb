@@ -14,4 +14,13 @@ class User < ActiveRecord::Base
 		end
 	end
 
+
+	def tweet_later(text)
+    	tweet = Twett.create(user_id: self.id, description: text) # Crea un tweet relacionado con este usuario en la tabla de tweets
+    	# Este es un método de Sidekiq con el cual se agrega a la cola una tarea para ser
+    	# 
+    	TweetWorker.perform_async(tweet.id)
+    	#La última linea debe de regresar un sidekiq job id
+    end
+
 end

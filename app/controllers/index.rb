@@ -41,7 +41,8 @@ post '/tweet' do
     #begin
     puts "*"*40
     puts text
-    CLIENT.update(text)
+    t = session[:user].connection.update(text)
+    session[:user].twetts << Twett.create(description: t.text)
     erb "Twett publicado exitosamente", layout: false
     #rescue
     #	erb "Error al publicar el Twett", layout: false
